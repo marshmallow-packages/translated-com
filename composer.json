@@ -1,0 +1,49 @@
+{
+    "name": "marshmallow/translated-com",
+    "description": "This packages provides you with the ability to easily connect your Laravel application to Translated.com.",
+    "keywords": [
+        "marshmallow",
+        "Laravel",
+        "Zoho",
+        "TranslatedCom",
+        "Translated.com"
+    ],
+    "homepage": "https://github.com/Marshmallow-Development/",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stef",
+            "email": "stef@marshmallow.dev",
+            "homepage": "https://marshmallow.dev",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "stef@marshmallow.dev"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.4|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Marshmallow\\TranslatedCom\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Marshmallow\\TranslatedCom\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Marshmallow\\TranslatedCom\\TranslatedComServiceProvider"
+            ],
+            "aliases": {
+                "TranslatedCom": "Marshmallow\\TranslatedCom\\Facades\\TranslatedCom"
+            }
+        }
+    }
+}
