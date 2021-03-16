@@ -1,13 +1,13 @@
 ![alt text](https://marshmallow.dev/cdn/media/logo-red-237x46.png "marshmallow.")
 
-# Laravel Zoho Desk
+# Laravel Translated.com
 
-[![Version](https://img.shields.io/packagist/v/marshmallow/zoho-desk)](https://github.com/marshmallow-packages/pages)
-[![Issues](https://img.shields.io/github/issues/marshmallow-packages/zoho-desk)](https://github.com/marshmallow-packages/pages)
-[![Licence](https://img.shields.io/github/license/marshmallow-packages/zoho-desk)](https://github.com/marshmallow-packages/pages)
-![PHP Syntax Checker](https://github.com/marshmallow-packages/zoho-desk/workflows/PHP%20Syntax%20Checker/badge.svg)
+[![Version](https://img.shields.io/packagist/v/marshmallow/translated-com)](https://github.com/marshmallow-packages/pages)
+[![Issues](https://img.shields.io/github/issues/marshmallow-packages/translated-com)](https://github.com/marshmallow-packages/pages)
+[![Licence](https://img.shields.io/github/license/marshmallow-packages/translated-com)](https://github.com/marshmallow-packages/pages)
+![PHP Syntax Checker](https://github.com/marshmallow-packages/translated-com/workflows/PHP%20Syntax%20Checker/badge.svg)
 
-This packages provides you with the ability to easily connect your Laravel application to ZohoDesk.
+This packages provides you with the ability to easily connect your Laravel application to Translated.com.
 
 ## Installation
 
@@ -51,9 +51,23 @@ use Marshmallow\TranslatedCom\Facades\TranslatedCom;
 $response = TranslatedCom::confirm($pid = 10000)->run();
 ```
 
-## Variables
+#### Get the translation
 
-## Objects
+Once Translated.com has translated your text, they will send a response to your server. By default this will be send to the `/translated-com/callback` url of your application but this can be changed in your config file. If you are going to change this and handle the response yourself you should implement this with the following logic in mind.
+
+Translated.com will send a POST request to the url u provide in the config file with the following data:
+
+```json
+{
+    "text": "VGVzdCBzdHJpbmc=",
+    "pid": "36078716",
+    "t": "Dutch"
+}
+```
+
+## Methods
+
+Below we have listed all the public methods that you can use to add more data to the translation request or override the behaviour of the config file.
 
 ### Quote
 
