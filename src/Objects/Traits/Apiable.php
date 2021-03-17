@@ -29,7 +29,6 @@ trait Apiable
     public function run(): Response
     {
         $order = $this->storeRequest();
-
         $response = Http::get(config('translated-com.path'), $this->getFullRequestDataArray());
         $response_array = $this->forceResponseToArray($response);
 
@@ -149,7 +148,7 @@ trait Apiable
 
     public function setSandbox(bool $sandbox): self
     {
-        $this->sandbox = $sandbox;
+        $this->sandbox = ($sandbox) ? 1 : 0;
         return $this;
     }
 
