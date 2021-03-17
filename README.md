@@ -25,6 +25,14 @@ Next; publish the config:
 php artisan vendor:publish --provider="Marshmallow\\TranslatedCom\\TranslatedComServiceProvider"
 ```
 
+Make sure it's allowed for Translated.com to do a POST request to the route where we handle the response by adding it to the `$except` array in the `VerifyCsrfToken` middleware.
+
+```php
+protected $except = [
+    '/translated-com/callback'
+];
+```
+
 ### Usage
 
 #### Get a quote
@@ -68,6 +76,60 @@ Translated.com will send a POST request to the url u provide in the config file 
     "text": "VGVzdCBzdHJpbmc=",
     "pid": "36078716",
     "t": "Dutch"
+}
+```
+
+#### Events
+
+When a translation is received, this package will trigger the `TranslationRecieved` event. You can listen to this and do any magic you need to perform when a translation is finalized. Listen to this event in you `EventServiceProvider`.
+
+```php
+use Marshmallow\TranslatedCom\Events\TranslationRecieved;
+
+protected $listen = [
+
+    //...
+
+    TranslationRecieved::class => [
+        // Your listeners
+    ],
+];
+```
+
+You will have the following public variables to access in your listener.
+
+```php
+namespace App\Listeners;
+
+use Marshmallow\TranslatedCom\Events\TranslationRecieved;
+
+class TranslatedComSandboxListener
+{
+    public function handle(TranslationRecieved $event)
+    {
+        /**
+         * The order that was send to Translated.com
+         *
+         * @var Marshmallow\TranslatedCom\Models\Order
+         */
+        $event->order;
+
+
+        /**
+         * The confirmation that was send to Translated.com
+         *
+         * @var Marshmallow\TranslatedCom\Models\Confirmation
+         */
+        $event->confirmation;
+
+
+        /**
+         * The result that was received from Translated.com
+         *
+         * @var Marshmallow\TranslatedCom\Models\Result
+         */
+        $event->result;
+    }
 }
 ```
 

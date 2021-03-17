@@ -38,8 +38,15 @@ class TestTranslation extends Command
      */
     public function handle()
     {
-        $qoute_repsonse = TranslatedCom::qoute('Test string')->setSandbox(true)->run();
-        TranslatedCom::confirm($qoute_repsonse->json()['pid'])->run();
+        $qoute_repsonse = TranslatedCom::qoute('Test string')
+            ->setSandbox(true)
+            ->run();
+
+        $pid = $qoute_repsonse->json()['pid'];
+
+        TranslatedCom::confirm($pid)
+            ->setSandbox(true)
+            ->run();
 
         $this->newLine();
         $this->info('🎉 The test was successfully created. The callback will be send to ' . TranslatedCom::getCallbackPath(config('translated-com.endpoint')));
