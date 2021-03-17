@@ -12,7 +12,7 @@ class TestTranslation extends Command
      *
      * @var string
      */
-    protected $signature = 'translate-com:test';
+    protected $signature = 'translated-com:test';
 
     /**
      * The console command description.
