@@ -19,6 +19,12 @@ You can install the package via composer:
 composer require marshmallow/translated-com
 ```
 
+Next; publish the config:
+
+```bash
+php artisan vendor:publish --provider="Marshmallow\\TranslatedCom\\TranslatedComServiceProvider"
+```
+
 ### Usage
 
 #### Get a quote
@@ -63,6 +69,14 @@ Translated.com will send a POST request to the url u provide in the config file 
     "pid": "36078716",
     "t": "Dutch"
 }
+```
+
+## Test run
+
+If you want to create a test run to validate your callback is working properly, you can use the command below.
+
+```php
+php artisan translated-com:test
 ```
 
 ## Methods
