@@ -117,6 +117,10 @@ trait Apiable
             'sandbox' => $this->sandbox,
         ];
 
+        if ($data['sandbox'] == 0) {
+            unset($data['sandbox']);
+        }
+
         foreach ($extra_data as $column) {
             $data[$column] = $this->{$column};
         }
