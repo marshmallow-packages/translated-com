@@ -23,6 +23,10 @@ class Order
 
     public function create($quote_methods = [])
     {
+        if (!$this->content) {
+            return null;
+        }
+
         $quote = TranslatedCom::qoute($this->content)
             ->setDataFormat($this->data_format)
             ->setModel($this->model)
@@ -41,7 +45,7 @@ class Order
         /**
          * Create the quotation
          */
-        $quote->run();
+        return $quote->run();
     }
 
     public function linkModel(Model $model, string $column): self
