@@ -5,7 +5,6 @@ namespace Marshmallow\TranslatedCom\Nova;
 use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use App\Nova\TranslatedComOrder;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
@@ -84,7 +83,7 @@ class TranslatedComConfirmation extends Resource
     public function fields(Request $request)
     {
         return [
-            BelongsTo::make(__('Order'), 'order', TranslatedComOrder::class),
+            BelongsTo::make(__('Order'), 'order', config('translated-com.resources.order')),
             Text::make(__('Output format'), 'of'),
             Text::make(__('Function'), 'f')->hideFromIndex(),
             Boolean::make(__('Sandbox'), 'sandbox')->hideFromIndex(),

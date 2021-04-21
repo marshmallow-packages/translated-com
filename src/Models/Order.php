@@ -2,10 +2,7 @@
 
 namespace Marshmallow\TranslatedCom\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Marshmallow\TranslatedCom\Models\Result;
-use Marshmallow\TranslatedCom\Models\Confirmation;
 use Marshmallow\TranslatedCom\Facades\TranslatedCom;
 
 class Order extends Model
@@ -36,16 +33,16 @@ class Order extends Model
 
     public function confirmedBy()
     {
-        return $this->belongsTo(User::class, 'confirmed_by');
+        return $this->belongsTo(config('translated-com.models.user'), 'confirmed_by');
     }
 
     public function confirmations()
     {
-        return $this->hasMany(Confirmation::class, 'pid', 'pid');
+        return $this->hasMany(config('translated-com.models.confirmation'), 'pid', 'pid');
     }
 
     public function translations()
     {
-        return $this->hasMany(Result::class, 'pid', 'pid');
+        return $this->hasMany(config('translated-com.models.result'), 'pid', 'pid');
     }
 }

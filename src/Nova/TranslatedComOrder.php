@@ -2,8 +2,6 @@
 
 namespace Marshmallow\TranslatedCom\Nova;
 
-use App\Nova\Page;
-use App\Nova\User;
 use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Code;
@@ -13,11 +11,9 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\MorphTo;
-use App\Nova\TranslatedComResult;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\BelongsTo;
-use App\Nova\TranslatedComConfirmation;
 use Marshmallow\TranslatedCom\Nova\Filters\ConfirmedFilter;
 use Marshmallow\TranslatedCom\Nova\Actions\ConfirmOrderAction;
 
@@ -107,7 +103,7 @@ class TranslatedComOrder extends Resource
             Text::make(__('ID'), 'pid'),
             Number::make(__('Words'), 'words'),
             Currency::make(__('Total'), 'total'),
-            BelongsTo::make(__('Confirmed by'), 'confirmedBy', User::class),
+            BelongsTo::make(__('Confirmed by'), 'confirmedBy', config('translated-com.resources.user')),
             DateTime::make(__('Confirmed at'), 'confirmed_at'),
 
             /**
@@ -136,8 +132,8 @@ class TranslatedComOrder extends Resource
             Text::make(__('Message'), 'message')->hideFromIndex(),
             DateTime::make(__('Delivery date'), 'delivery_date')->hideFromIndex(),
 
-            HasMany::make(__('Confirmations'), 'confirmations', TranslatedComConfirmation::class),
-            HasMany::make(__('Translations'), 'translations', TranslatedComResult::class),
+            HasMany::make(__('Confirmations'), 'confirmations', config('translated-com.resources.confirmation')),
+            HasMany::make(__('Translations'), 'translations', config('translated-com.resources.result')),
         ];
     }
 

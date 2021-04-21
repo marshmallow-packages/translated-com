@@ -3,7 +3,6 @@
 namespace Marshmallow\TranslatedCom\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Marshmallow\TranslatedCom\Models\Order;
 
 class Confirmation extends Model
 {
@@ -13,6 +12,6 @@ class Confirmation extends Model
 
     public function order()
     {
-        return $this->belongsTo(Order::class, 'pid', 'pid');
+        return $this->belongsTo(config('translated-com.models.order'), 'pid', 'pid');
     }
 }

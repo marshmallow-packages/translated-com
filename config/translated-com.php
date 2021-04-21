@@ -99,4 +99,18 @@ return [
     'morphables' => [
         //
     ],
+
+    'models' => [
+        'user' => \App\Models\User::class,
+        'confirmation' => \Marshmallow\TranslatedCom\Models\Confirmation::class,
+        'result' => \Marshmallow\TranslatedCom\Models\Result::class,
+        'order' => \Marshmallow\TranslatedCom\Models\Order::class,
+    ],
+
+    'resources' => [
+        'user' => \App\Nova\User::class,
+        'confirmation' => \App\Nova\TranslatedComConfirmation::class,
+        'result' => \App\Nova\TranslatedComResult::class,
+        'order' => \App\Nova\TranslatedComOrder::class,
+    ],
 ];
