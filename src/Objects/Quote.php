@@ -5,6 +5,7 @@ namespace Marshmallow\TranslatedCom\Objects;
 use Exception;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Database\Eloquent\Model;
 use Marshmallow\TranslatedCom\Objects\Method;
 use Marshmallow\TranslatedCom\Facades\TranslatedCom;
 use Marshmallow\TranslatedCom\Objects\Traits\Apiable;
@@ -23,6 +24,10 @@ class Quote
     protected $endpoint;
     protected $subject;
     protected $instructions;
+    protected $model_type;
+    protected $model_id;
+    protected $column;
+    protected $flex;
 
     public function __construct(string $text)
     {
@@ -115,6 +120,25 @@ class Quote
     public function setInstructions(string $instruction): self
     {
         $this->instructions = $instruction;
+        return $this;
+    }
+
+    public function setModel(Model $model): self
+    {
+        $this->model_type = get_class($model);
+        $this->model_id = $model->id;
+        return $this;
+    }
+
+    public function setColumn(string $column): self
+    {
+        $this->column = $column;
+        return $this;
+    }
+
+    public function setFlex(array $flex_key = null): self
+    {
+        $this->flex = $flex_key;
         return $this;
     }
 }

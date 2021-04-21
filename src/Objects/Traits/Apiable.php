@@ -46,7 +46,9 @@ trait Apiable
         }
 
         if ($this->f == Method::QUOTE) {
-            return Order::create($this->getStorableDataArray());
+            return Order::create($this->getStorableDataArray([
+                'model_type', 'model_id', 'column', 'flex'
+            ]));
         } else if ($this->f == Method::CONFIRM) {
             return Confirmation::create($this->getStorableDataArray());
         }
@@ -95,25 +97,31 @@ trait Apiable
         ];
     }
 
-    protected function getStorableDataArray(): array
+    protected function getStorableDataArray($extra_data = []): array
     {
         $ignore_while_storing = [
             'cid', 'p',
         ];
-        return collect($this->getFullRequestDataArray())->reject(function ($value, $key) use ($ignore_while_storing) {
+        return collect($this->getFullRequestDataArray($extra_data))->reject(function ($value, $key) use ($ignore_while_storing) {
             return in_array($key, $ignore_while_storing);
         })->toArray();
     }
 
-    protected function getFullRequestDataArray(): array
+    protected function getFullRequestDataArray($extra_data = []): array
     {
-        return array_merge([
+        $data = [
             'cid' => $this->cid,
             'p' => $this->p,
             'of' => $this->of,
             'f' => $this->f,
             'sandbox' => $this->sandbox,
-        ], $this->getRequestDataArray());
+        ];
+
+        foreach ($extra_data as $column) {
+            $data[$column] = $this->{$column};
+        }
+
+        return array_merge($data, $this->getRequestDataArray());
     }
 
     public function setUsername(string $username): self

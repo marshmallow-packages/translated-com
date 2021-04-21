@@ -17,6 +17,10 @@ You can install the package via composer:
 
 ```bash
 composer require marshmallow/translated-com
+php artisan migrate
+php artisan marshmallow:resource TranslatedComOrder TranslatedCom
+php artisan marshmallow:resource TranslatedComConfirmation TranslatedCom
+php artisan marshmallow:resource TranslatedComResult TranslatedCom
 ```
 
 Next; publish the config:
@@ -33,7 +37,72 @@ protected $except = [
 ];
 ```
 
-### Usage
+### Resource usage
+
+#### Your models
+
+You can create an order at Translated.com from your models. You do need to prepare your models for this. You need to make sure this package knows which columns on your model should be translated and what kind of data is in the column. Also, you need to implement the `TranslatedCom` trait.
+
+```php
+use Marshmallow\TranslatedCom\Objects\DataFormat;
+use Marshmallow\TranslatedCom\Traits\TranslatedCom;
+
+class Page extends Model
+{
+    use TranslatedCom;
+
+    protected $translated_com = [
+        'name' => DataFormat::PLAINTEXT,
+        'layout' => DataFormat::FLEX,
+        'content' => DataFormat::HTML,
+    ];
+}
+```
+
+Once your model implemantation is ready, you can get this model and create the order like the example below.
+
+```php
+$page = Page::first();
+$page->createTranslationOrders();
+```
+
+You can also overrule the defaults from the config by calling the setter methods as an array. Please check the example below:
+
+```php
+$page->createTranslationOrders([
+	'setSourceLanguage' => ['DE'],
+	'setTargetLanguage' => ['ES'],
+	'setEndpoint' => ['https://marshmallow.dev'],
+	'setOutputFormat' => [OutputFormat::JSON],
+	'setUsername' => ['stef@marshmallow.dev'],
+	'setPassword' => ['mr-mallow-2021'],
+	'setSandbox' => [true],
+	'setJobType' => [JobType::PROFESSIONAL],
+	'setProjectName' => ['Marshmallow'],
+	'setDataFormat' => [DataFormat::PLAINTEXT],
+]);
+```
+
+#### Flexible
+
+If you are using the flexible package, you need to add the same logic as above to your Flexible layouts. Please make sure you use the `DataFormat::FLEX` on your model implementation so we know that we need to get the flexible information.
+
+```php
+use Marshmallow\TranslatedCom\Objects\DataFormat;
+use Marshmallow\TranslatedCom\Traits\TranslatedCom;
+
+class ContentWithLeftTitleLayout extends MarshmallowLayout
+{
+    use TranslatedCom;
+
+    protected $translated_com = [
+        'title' => DataFormat::PLAINTEXT,
+        'content' => DataFormat::HTML,
+    ];
+}
+```
+
+### Manual usage
 
 #### Get a quote
 

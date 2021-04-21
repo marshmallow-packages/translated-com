@@ -95,4 +95,8 @@ return [
      */
     'store_qoutes' => true,
 
+
+    'morphables' => [
+        //
+    ],
 ];
