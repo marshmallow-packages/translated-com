@@ -11,9 +11,17 @@ use Laravel\Nova\Fields\BelongsTo;
 
 class TranslatedComConfirmation extends Resource
 {
-    public static $group = 'Translated.com';
-
     public static $priority = 20;
+
+    /**
+     * Get the logical group associated with the resource.
+     *
+     * @return string
+     */
+    public static function group()
+    {
+        return __('Translated.com');
+    }
 
     /**
      * Get the displayable label of the resource.
