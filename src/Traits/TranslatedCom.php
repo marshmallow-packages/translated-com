@@ -28,6 +28,7 @@ trait TranslatedCom
                 $this->translated_com_order[] = $order;
             }
         }
+
         foreach ($this->translated_com_order as $order) {
             $order->create($config);
         }
